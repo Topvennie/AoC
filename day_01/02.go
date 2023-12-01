@@ -60,8 +60,6 @@ func main() {
 			}
 		}
 
-		fmt.Println(line)
-
 		first := -1
 		last := -1
 
