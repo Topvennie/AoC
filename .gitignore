@@ -1,1 +1,10 @@
+*
+
+# Unignore all with extension
+!*.*
+
+# Unignore directories
+!*/
+
+# Ignore input files
 *.txt

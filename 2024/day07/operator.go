@@ -43,12 +43,10 @@ func (c *concat) exec() int {
 	multiplier := 1
 	y := c.y
 
-	// Find the number of digits in y
 	for y > 0 {
 		multiplier *= 10
 		y /= 10
 	}
 
-	// Concatenate using arithmetic
 	return c.x*multiplier + c.y
 }

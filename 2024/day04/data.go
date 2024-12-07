@@ -1,25 +1,5 @@
 package main
 
-import (
-	"fmt"
-	"os"
-	"strings"
-)
-
-func main() {
-	lines := parseInput()
-	d := newData(lines)
-	fmt.Println(d.getXMAS())
-}
-
-func parseInput() []string {
-	data, _ := os.ReadFile("input.txt")
-	input := string(data)
-
-	lines := strings.Split(input, "\n")
-	return lines
-}
-
 type data struct {
 	data [][]rune
 }
@@ -123,42 +103,48 @@ func (d *data) checkLetter(c coordinate, letter rune) bool {
 	return d.data[c.x][c.y] == letter
 }
 
-type coordir struct {
-	coord coordinate
-	dir   direction
+func (d *data) getXMASSlope() int {
+	// Get all mas
+
+	amount := 0
+	for i := range d.data {
+		for j := range d.data[i] {
+			coord := coordinate{x: i, y: j}
+			// Check A
+			if !d.checkLetter(coord, 'A') {
+				continue
+			}
+
+			if d.checkSlope(coord, topLeft, bottomRight) && d.checkSlope(coord, topRight, bottomLeft) {
+				amount++
+			}
+		}
+	}
+
+	return amount
 }
 
-type coordinate struct {
-	x int
-	y int
-}
+func (d *data) checkSlope(c coordinate, dir1 direction, dir2 direction) bool {
+	opposite := map[rune]rune{
+		'M': 'S',
+		'S': 'M',
+	}
 
-type direction int
+	pos1 := c.add(dirToCoord[dir1])
+	if !d.inside(*pos1) {
+		return false
+	}
 
-const (
-	up direction = iota + 1
-	right
-	down
-	left
-	topRight
-	bottomRight
-	bottomLeft
-	topLeft
-)
+	pos2 := c.add(dirToCoord[dir2])
+	if !d.inside(*pos2) {
+		return false
+	}
 
-var directions = []direction{up, right, down, left, topRight, bottomRight, bottomLeft, topLeft}
+	rune1 := d.data[pos1.x][pos1.y]
+	rune2, ok := opposite[rune1]
+	if !ok {
+		return false
+	}
 
-var dirToCoord = map[direction]coordinate{
-	up:          {x: 0, y: -1},
-	right:       {x: -1, y: 0},
-	down:        {x: 0, y: 1},
-	left:        {x: 1, y: 0},
-	topRight:    {x: 1, y: -1},
-	bottomRight: {x: 1, y: 1},
-	bottomLeft:  {x: -1, y: 1},
-	topLeft:     {x: -1, y: -1},
-}
-
-func (c *coordinate) add(c2 coordinate) *coordinate {
-	return &coordinate{x: c.x + c2.x, y: c.y + c2.y}
+	return rune2 == d.data[pos2.x][pos2.y]
 }

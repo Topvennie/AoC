@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"math"
 	"os"
@@ -16,8 +17,85 @@ const (
 const maxCorrections = 1
 
 func main() {
+	var part int
+	var input string
+	flag.IntVar(&part, "p", 1, "Part 1 or 2")
+	flag.StringVar(&input, "i", "input.txt", "Location of the input file")
+	flag.Parse()
+	fmt.Printf("Running part: %d with input file: %s\n", part, input)
+
+	if part == 1 {
+		solve1(input)
+		return
+	}
+
+	solve2(input)
+}
+
+func solve1(inputFile string) {
 	// Read
-	data, _ := os.ReadFile("input.txt")
+	data, _ := os.ReadFile(inputFile)
+	input := string(data)
+
+	// Parse
+	amount := 0
+
+	lines := strings.Split(input, "\n")
+	for _, line := range lines {
+		parts := strings.Fields(line)
+
+		// Avoid empty lines
+		if len(parts) < 2 {
+			continue
+		}
+
+		one, _ := strconv.Atoi(parts[0])
+		two, _ := strconv.Atoi(parts[1])
+
+		if math.Abs(float64(one)-float64(two)) > 3 || one == two {
+			continue
+		}
+
+		direction := increasing
+		if one > two {
+			direction = decreasing
+		}
+
+		previous := two
+
+		valid := true
+		for _, part := range parts[2:] {
+			current, _ := strconv.Atoi(part)
+			if current < previous && direction == decreasing {
+				// Decreasing
+				if previous-current < 4 {
+					previous = current
+					continue
+				}
+
+			} else if current > previous && direction == increasing {
+				// Increasing
+				if current-previous < 4 {
+					previous = current
+					continue
+				}
+			}
+
+			valid = false
+			break
+		}
+
+		if valid {
+			amount++
+		}
+	}
+
+	fmt.Println(amount)
+}
+
+func solve2(inputFile string) {
+	// Read
+	data, _ := os.ReadFile(inputFile)
 	input := string(data)
 
 	// Parse

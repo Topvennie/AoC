@@ -1,12 +1,5 @@
 package main
 
-import (
-	"fmt"
-	"os"
-	"strconv"
-	"strings"
-)
-
 type sequence []int
 
 type rule struct {
@@ -83,47 +76,4 @@ func (r *ruleSet) format(seq sequence) sequence {
 	}
 
 	return seq
-}
-
-func parse() ([]rule, []sequence) {
-	data, _ := os.ReadFile("input.txt")
-	parts := strings.Split(string(data), "\n\n")
-
-	var rules []rule
-	rulePart := strings.Split(parts[0], "\n")
-	for _, r := range rulePart {
-		parts := strings.Split(r, "|")
-		first, _ := strconv.Atoi(parts[0])
-		second, _ := strconv.Atoi(parts[1])
-		rules = append(rules, rule{first: first, second: second})
-	}
-
-	var sequences []sequence
-	sequencePart := strings.Split(parts[1], "\n")
-	for _, s := range sequencePart {
-		var seq sequence
-		parts := strings.Split(s, ",")
-		for _, part := range parts {
-			number, _ := strconv.Atoi(part)
-			seq = append(seq, number)
-		}
-		sequences = append(sequences, seq)
-	}
-
-	return rules, sequences
-}
-
-func main() {
-	rules, sequences := parse()
-	ruleSet := newRuleSet(rules)
-
-	amount := 0
-	for _, seq := range sequences {
-		if !ruleSet.check(seq) {
-			s := ruleSet.format(seq)
-			amount += s[len(s)/2]
-		}
-	}
-
-	fmt.Println(amount)
 }

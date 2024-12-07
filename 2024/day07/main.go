@@ -10,25 +10,27 @@ import (
 
 func main() {
 	var part int
-	flag.IntVar(&part, "p", 1, "part 1 or 2")
+	var input string
+	flag.IntVar(&part, "p", 1, "Part 1 or 2")
+	flag.StringVar(&input, "i", "input.txt", "Location of the input file")
 	flag.Parse()
-	fmt.Println("Running part: ", part)
+	fmt.Printf("Running part: %d with input file: %s\n", part, input)
 
 	if part == 1 {
-		solve1()
+		solve1(input)
 		return
 	}
 
-	solve2()
+	solve2(input)
 }
 
-func solve1() {
+func solve1(input string) {
 	operators := []func(x, y int) operator{
 		newAdd,
 		newMultiply,
 	}
 
-	lines := parse()
+	lines := parse(input)
 
 	amount := 0
 	for _, line := range lines {
@@ -40,14 +42,14 @@ func solve1() {
 	fmt.Println(amount)
 }
 
-func solve2() {
+func solve2(input string) {
 	operators := []func(x, y int) operator{
 		newAdd,
 		newMultiply,
 		newConcat,
 	}
 
-	lines := parse()
+	lines := parse(input)
 
 	amount := 0
 	for _, line := range lines {
@@ -64,8 +66,8 @@ type line struct {
 	input  []int
 }
 
-func parse() []line {
-	file, _ := os.ReadFile("input.txt")
+func parse(input string) []line {
+	file, _ := os.ReadFile(input)
 	data := strings.TrimSpace(string(file))
 	rows := strings.Split(data, "\n")
 
