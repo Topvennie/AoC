@@ -1,10 +1,5 @@
 package main
 
-import (
-	"fmt"
-	"strconv"
-)
-
 type operator interface {
 	exec() int
 }
@@ -45,8 +40,15 @@ func newConcat(x, y int) operator {
 }
 
 func (c *concat) exec() int {
-	strNumber := fmt.Sprintf("%d%d", c.x, c.y)
-	number, _ := strconv.Atoi(strNumber)
+	multiplier := 1
+	y := c.y
 
-	return number
+	// Find the number of digits in y
+	for y > 0 {
+		multiplier *= 10
+		y /= 10
+	}
+
+	// Concatenate using arithmetic
+	return c.x*multiplier + c.y
 }
