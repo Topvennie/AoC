@@ -21,10 +21,14 @@ var DirToCoord = map[Dir]Coord{
 	Down:  {X: 0, Y: 1},
 }
 
+func (c *Coord) Equal(c2 Coord) bool {
+	return c.X == c2.X && c.Y == c2.Y
+}
+
 func (c *Coord) Add(c2 Coord) *Coord {
 	return &Coord{X: c.X + c2.X, Y: c.Y + c2.Y}
 }
 
-func (c *Coord) Equal(c2 Coord) bool {
-	return c.X == c2.X && c.Y == c2.Y
+func (c *Coord) Sub(c2 Coord) *Coord {
+	return &Coord{X: c.X - c2.X, Y: c.Y - c2.Y}
 }
