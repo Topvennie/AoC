@@ -14,6 +14,8 @@ const (
 	Down
 )
 
+var Dirs = []Dir{Up, Right, Down, Left}
+
 var DirToCoord = map[Dir]Coord{
 	Up:    {X: 0, Y: -1},
 	Right: {X: 1, Y: 0},
