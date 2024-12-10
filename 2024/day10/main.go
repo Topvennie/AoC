@@ -12,9 +12,17 @@ import (
 func main() {
 	var part int
 	var input string
+	var gen string
 	flag.IntVar(&part, "p", 1, "Part 1 or 2")
 	flag.StringVar(&input, "i", "input.txt", "Location of the input file")
+	flag.StringVar(&gen, "g", "", "The file to write to")
 	flag.Parse()
+
+	if gen != "" {
+		generate(10000, 10000, gen)
+		return
+	}
+
 	fmt.Printf("Running part: %d with input file: %s\n", part, input)
 
 	if part == 1 {
@@ -56,7 +64,6 @@ func parse(inputFile string) (trailMap, []coordinate.Coord) {
 	t := new(len(lines[0]), len(lines))
 	var coords = []coordinate.Coord{}
 	for i, line := range lines {
-		fmt.Println(line)
 		for j, char := range line {
 			number := int(char) - '0'
 			t[i] = append(t[i], number)
