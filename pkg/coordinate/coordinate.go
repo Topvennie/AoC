@@ -23,6 +23,10 @@ var DirToCoord = map[Dir]Coord{
 	Down:  {X: 0, Y: 1},
 }
 
+func New(x, y int) *Coord {
+	return &Coord{X: x, Y: y}
+}
+
 func (c *Coord) Equal(c2 Coord) bool {
 	return c.X == c2.X && c.Y == c2.Y
 }
