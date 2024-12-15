@@ -10,8 +10,8 @@ type Dir int
 const (
 	Up Dir = iota + 1
 	Right
-	Left
 	Down
+	Left
 )
 
 var Dirs = []Dir{Up, Right, Down, Left}
