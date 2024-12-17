@@ -6,12 +6,9 @@ import (
 	"fmt"
 	"math"
 	"os"
-	"regexp"
 
 	"github.com/Topvennie/AoC/pkg/coordinate"
 )
-
-var reg = regexp.MustCompile("[0-9]+")
 
 func main() {
 	var part int

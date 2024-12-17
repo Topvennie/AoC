@@ -35,6 +35,10 @@ func (c *Coord) Add(c2 Coord) *Coord {
 	return &Coord{X: c.X + c2.X, Y: c.Y + c2.Y}
 }
 
+func (c *Coord) AddDir(dir Dir) *Coord {
+	return c.Add(DirToCoord[dir])
+}
+
 func (c *Coord) Sub(c2 Coord) *Coord {
 	return &Coord{X: c.X - c2.X, Y: c.Y - c2.Y}
 }
