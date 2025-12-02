@@ -38,11 +38,6 @@ func solve1(input string) {
 		instr := parseInstruction(line)
 
 		dial.add(instr)
-
-		amount := instr.amount
-		if instr.dir == l {
-			amount *= -1
-		}
 	}
 
 	fmt.Printf("Zero amount: %d\n", dial.zeros)
@@ -63,11 +58,6 @@ func solve2(input string) {
 				amount: 1,
 				dir:    instr.dir,
 			})
-		}
-
-		amount := instr.amount
-		if instr.dir == l {
-			amount *= -1
 		}
 	}
 
