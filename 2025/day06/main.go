@@ -31,6 +31,15 @@ func solve1(input string) {
 	problems := make([]*problem, 0)
 
 	lines := strings.Split(input, "\n")
+
+	// Remove leading or tailing empty line
+	for len(lines[0]) == 0 {
+		lines = lines[1:]
+	}
+	for len(lines[len(lines)-1]) == 0 {
+		lines = lines[:len(lines)-1]
+	}
+
 	lineIdx := 0
 
 	for _, line := range lines[:len(lines)-1] {
@@ -81,7 +90,15 @@ func solve1(input string) {
 
 func solve2(input string) {
 	lines := strings.Split(input, "\n")
-	lines = lines[:len(lines)-1]
+
+	// Remove leading or tailing empty lines
+	for len(lines[0]) == 0 {
+		lines = lines[1:]
+	}
+	for len(lines[len(lines)-1]) == 0 {
+		lines = lines[:len(lines)-1]
+	}
+
 	problems := make([]*problem, 0)
 
 	for i := range len(lines[0]) {
